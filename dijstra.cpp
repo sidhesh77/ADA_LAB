@@ -1,132 +1,57 @@
-#include<iostream>
-#include<random>
-#include<climits>
+#include<bits/stdc++.h>
 using namespace std;
 
-class node{
-    public:
-    int val;
-    node* next;
-
-    node(int v){
-        val = v;
-        next = nullptr;
-    }
-};
-
-void generate_vertices(int** cost, int n){
-    for(int i =0;i<n;i++)
-        cost[i] = new int[n];
-    
-    
-    for(int i=0;i<n;i++){
-        for(int j = 0;j<n;j++){
-            cost[i][j] = 0;
+int mindist(vector<int> &dist, vector<bool> &spcalculated)
+{
+    int minDist=INT_MAX;
+    int minIndex=-1;
+    for(int v=0;v<dist.size();v++)
+    {
+        if(!spcalculated[v] && dist[v]<minDist)
+        {
+            minDist=dist[v];
+            minIndex=v;
         }
     }
-
-    cout<<"Enter number of edges : ";
-    int edges;
-    cin>>edges;
-    int i,j,w;
-    for(int k=0;k<edges;k++){
-        cout<<"Enter i, j: ";
-        cin>>i>>j;
-        cout<<"Enter weight : ";
-        cin>>w;
-        cost[i][j] = w;
-    }
-
-    return;
+    return minIndex;
 }
 
-void dijkstra(int source, int** cost, int n, int* dist, node* path[], int* p) {
-    bool flag[n] = {false};
-    for (int i = 0; i < n; i++) {
-        dist[i] = (cost[source][i] == 0 && i != source) ? INT_MAX : cost[source][i];
-        flag[i] = false;
-        path[i] = new node(source);
-    }
-
-    flag[source] = true;
-    dist[source] = 0;
-    p[source] = 0;
-
-    for (int count = 0; count < n - 1; count++) { 
-        int u = -1, minDist = INT_MAX;
-        for (int i = 0; i < n; i++) { 
-            if (!flag[i] && dist[i] < minDist) {
-                minDist = dist[i];
-                u = i;
-            }
-        }
-
-        if (u == -1) break; 
-        flag[u] = true;
-
-        for (int j = 0; j < n; j++) {
-            if (!flag[j] && cost[u][j] && dist[u] != INT_MAX && dist[j] > dist[u] + cost[u][j]) {
-                dist[j] = dist[u] + cost[u][j];
-
-                p[j] = u;
-                delete path[j]; 
-                path[j] = new node(source);
-                node* temp = path[j];
-                for (node* p = path[u]; p != nullptr; p = p->next) {
-                    temp->next = new node(p->val);
-                    temp = temp->next;
-                }
-                temp->next = new node(j);
-            }
+void dijkstra(int source,vector<vector<int>> &graph)
+{
+    int V=graph.size();
+    vector<int> dist(V,INT_MAX);
+    vector<bool> spcalculated(V,false);
+    dist[source]=0;
+    for(int i=0;i<V-1;i++)
+    {
+        int u=mindist(dist,spcalculated);
+        spcalculated[u]=true;
+        for(int v=0;v<V;v++)
+        {
+            if(!spcalculated[v] && graph[u][v] && dist[u]!=INT_MAX && dist[u]+graph[u][v]<dist[v])
+            dist[v]=dist[u]+graph[u][v];
         }
     }
-
-    for (int i = 0; i < n; i++) {
-        cout << "Dist of " << i << ": " << (dist[i] == INT_MAX ? -1 : dist[i]) << endl;
-        cout << "Path: ";
-        for (node* temp = path[i]; temp != nullptr; temp = temp->next) {
-            cout << temp->val << " -> ";
+        //Print shortest distance
+        cout<<"Vertex \t Distance from source"<<endl;
+        for(int i=0;i<V;i++)
+        {
+            cout<<i<<"\t"<<dist[i]<<endl;
         }
-        cout << "END" << endl<<endl;
-    }
 }
 
-int main(){
-    int n ;
-    cout<<"Enter number of vertices : ";
-    cin>>n;
-    int** cost = new int*[n];
-    generate_vertices(cost, n);
-
-    int source;
-    cout<<"Enter source : ";
-    cin>>source;
-
-    int* dist = new int[n];
-    for(int i=0;i<n;i++){
-        dist[i] = INT32_MAX;
-    }
-    dist[source] = 0;
-    node* path[n];
-
-    for (int i = 0; i < n; i++) {
-        path[i] = nullptr; 
-    }
-
-    int* p = new int[n];
-    dijkstra(source, cost, n, dist, path, p);
-
-    int i = n-1;
-    while( p[i]!=0){
-        cout<<p[i]<<" ";
-        i = p[i];
-    }
-
-    for (int i = 0; i < n; i++) {
-        delete[] cost[i];
-    }
-
-    delete[] cost;
-    delete[] dist;
-
+int main()
+{
+    vector<vector<int>> graph = {
+        {0, 4, 0, 0, 0, 0, 0, 8, 0},
+        {4, 0, 8, 0, 0, 0, 0, 11, 0},
+        {0, 8, 0, 7, 0, 4, 0, 0, 2},
+        {0, 0, 7, 0, 9, 14, 0, 0, 0},
+        {0, 0, 0, 9, 0, 10, 0, 0, 0},
+        {0, 0, 4, 14, 10, 0, 2, 0, 0},
+        {0, 0, 0, 0, 0, 2, 0, 1, 6},
+        {8, 11, 0, 0, 0, 0, 1, 0, 7},
+        {0, 0, 2, 0, 0, 0, 6, 7, 0}
+    };
+    dijkstra(0,graph);
 }
