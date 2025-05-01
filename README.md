@@ -57,6 +57,7 @@ Space complexity - O(log b)
 - If arr[j] > arr[j+1], swap the two elements.
 - After each outer loop pass, the largest element is placed at the end.
 - Repeat the process until no swaps are needed, indicating the array is sorted.
+  
 <img src="https://github.com/user-attachments/assets/7c4f0c19-bf3b-4074-80f4-76e9ebe2e05f" width="500">
 
 Time Complexity:
@@ -93,6 +94,8 @@ Space Complexity - O(1)
 - Recursively apply the same steps to the sub-arrays to the left and right of the pivot.
 - Repeat until the sub-arrays contain only one element or are empty (base case).
 
+<img src="https://github.com/user-attachments/assets/6f6c7096-d498-41af-a4a3-c829a1f486f2" width="500">
+
 Time Complexity:
     Best Case - O(n log n) // When the pivot divides the array into two nearly equal sub array 
 
@@ -109,6 +112,8 @@ Space Complexity - O(log n)
 - Continue merging until the entire array is sorted.
 - Each division of the array is handled separately.
 - Final result is a sorted array.
+
+<img src="https://github.com/user-attachments/assets/56e7c9fc-6e0b-44ca-a908-f28e1bff0aac" width="500">
 
 Time Complexity: 
 // No matter the input, it will divide the array into sub-array and then merge
