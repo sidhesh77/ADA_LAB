@@ -57,6 +57,7 @@ Space complexity - O(log b)
 - If arr[j] > arr[j+1], swap the two elements.
 - After each outer loop pass, the largest element is placed at the end.
 - Repeat the process until no swaps are needed, indicating the array is sorted.
+<img src="https://github.com/user-attachments/assets/7c4f0c19-bf3b-4074-80f4-76e9ebe2e05f" width="500">
 
 Time Complexity:
     Best Case - O(n) // When elements are arranged in sorted order
