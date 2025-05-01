@@ -307,7 +307,6 @@ Enter the value of n
 [2 4 1 3]
 [3 1 4 2]
 #### Time Complexity: O(N!) 
-![alt text](Lab9/Queen/queenimage.png)
 #### Space Complexity: O(N)
 
 
@@ -344,7 +343,6 @@ abaaba
 Longest Common Substring - baba
 ```
 #### Time Complexity: O(m*n) 
-![alt text](Lab9/LCS/image.png)
 #### Space Complexity: O(m*n)
 
 
@@ -385,5 +383,4 @@ All possible colorings:
 3 2 1 3
 ```
 #### Time Complexity: O(n * m^n)
-![alt text](Lab10/Graph-Coloring/graph_coloring_log_comparison.png)
 #### Space Complexity: O(n * m^n)
